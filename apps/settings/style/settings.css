@@ -165,7 +165,7 @@ label[for^="pwd"] {
 #wallpaper {
   position: relative;
   overflow: hidden;
-  height: 18rem;
+  height: 17rem;
 }
 
 #wallpaper-button {
@@ -186,6 +186,31 @@ label[for^="pwd"] {
   margin-top: -10rem;
   position: absolute;
   width: 100%;
+}
+
+#screen-timeout {
+  position: relative;
+}
+
+#screen-timeout .icon-dialog {
+  height: 3.8rem;
+}
+
+#screen-timeout select {
+  position: absolute;  
+  height: 6rem;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+}
+
+#screen-timeout button {
+  width: calc(100% - 4rem);
+}
+
+#screen-timeout span {
+  position: absolute;
+  right: 3rem;
 }
 
 
