@@ -160,14 +160,39 @@ label[for^="pwd"] {
  * Wallpaper snapshot
  */
 
+#wallpaper-header { border: none; }
+
+#wallpaper {
+  position: relative;
+  overflow: hidden;
+  /*background: blue;*/
+  height: 18rem;
+}
+
+#wallpaper-button {
+  background: url(images/wallpaper_edit.png);
+  position: absolute;
+  border: none;
+  height: 45px;
+  bottom: 1rem;
+  width: 45px;
+  right: 1rem;
+  margin: 0;
+}
+#wallpaper-button.hover {
+  background: url(images/wallpaper_edit_pressed.png);
+}
+
 #wallpaper-preview {
-  width: 9rem;
-  height: 13.5rem;
-  border: solid black 0.2rem;
+  margin-top: -10rem;
+  position: absolute;
+  /*background: red;*/
+  width: 100%;
+/*  border: solid black 0.2rem;
   border-radius: 0.4rem;
   margin-left: 11rem;
   margin-top: -1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;*/
 }
 
 
