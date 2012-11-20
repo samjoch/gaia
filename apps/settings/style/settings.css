@@ -165,7 +165,6 @@ label[for^="pwd"] {
 #wallpaper {
   position: relative;
   overflow: hidden;
-  /*background: blue;*/
   height: 18rem;
 }
 
@@ -186,13 +185,7 @@ label[for^="pwd"] {
 #wallpaper-preview {
   margin-top: -10rem;
   position: absolute;
-  /*background: red;*/
   width: 100%;
-/*  border: solid black 0.2rem;
-  border-radius: 0.4rem;
-  margin-left: 11rem;
-  margin-top: -1rem;
-  margin-bottom: 0.5rem;*/
 }
 
 
