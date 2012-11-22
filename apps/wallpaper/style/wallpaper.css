@@ -6,7 +6,10 @@ html, body {
 }
 
 /* for the pick activity */
-#wallpapers { overflow: hidden; }
+#wallpapers { 
+  height: 0;
+  overflow: hidden; 
+}
 
 .wallpaper {
   border-bottom: 1px solid #000000;

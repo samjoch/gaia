@@ -36,7 +36,7 @@ var Wallpaper = {
         this.crop(this.wallpapers[i].firstChild);
       }
       var el = document.getElementById('wallpapers');
-      el && el.style.height = 'auto';
+      if(el) { el.style.height = 'auto'; };
     }
 
 };
