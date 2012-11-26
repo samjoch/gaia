@@ -192,20 +192,21 @@ label[for^="pwd"] {
   position: relative;
 }
 
-#screen-timeout .icon-dialog {
-  height: 3.8rem;
-}
-
 #screen-timeout select {
   position: absolute;  
   height: 6rem;
-  width: 100%;
+  width: 15rem;
   opacity: 0;
+  right: 0;
   top: 0;
 }
 
 #screen-timeout button {
-  width: calc(100% - 4rem);
+  height: 3.8rem;
+  right: 1.5rem;
+  width: 12rem;
+  float: right;
+  left: auto;
 }
 
 #screen-timeout span {
