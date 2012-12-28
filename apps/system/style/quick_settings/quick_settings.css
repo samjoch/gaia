@@ -24,9 +24,14 @@
   outline: none;
   font-size: 14px;
   line-height: 18px;
+}
 
+#quick-settings > .separator {
   border-right: 1px black solid;
   border-left: 1px gray solid;
+  margin: 15px 0;
+  height: 30px;
+  float: left;
 }
 
 #quick-settings > a:first-child {

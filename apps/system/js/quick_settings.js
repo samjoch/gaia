@@ -9,7 +9,8 @@ var QuickSettings = {
 
   init: function qs_init() {
     var settings = window.navigator.mozSettings;
-    if (!settings)
+    this.conn = window.navigator.mozMobileConnection;
+    if (!settings || !this.conn)
       return;
 
     this.getAllElements();
@@ -31,23 +32,11 @@ var QuickSettings = {
 
     /* monitor data setting
      * TODO prevent quickly tapping on it
+     * Also the initializing opacity isn't done here
      */
-    SettingsListener.observe('ril.data.enabled', true, function(value) {
-      var conn = window.navigator.mozMobileConnection;
-      var label = {
-        'lte': '4G', // 4G LTE
-        'ehrpd': '4G', // 4G CDMA
-        'hspa+': 'H+', // 3.5G HSPA+
-        'hsdpa': 'H', 'hsupa': 'H', 'hspa': 'H', // 3.5G HSDPA
-        'evdo0': '3G', 'evdoa': '3G', 'evdob': '3G', '1xrtt': '3G', // 3G CDMA
-        'umts': '3G', // 3G
-        'edge': 'E', // EDGE
-        'is95a': '2G', 'is95b': '2G', // 2G CDMA
-        'gprs': '2G'
-      };
-      var type = label[conn.data.type] ? [type, value] : ['false'];
-      self.data.dataset.enabled = type.join('-');
-    });
+    this.conn.addEventListener('datachange', this.updateDataIcon.bind(this));
+    SettingsListener.observe('ril.data.enabled', true,
+      this.updateDataIcon.bind(this));
 
     /* monitor bluetooth setting and initialization/disable ready event
      * - when settings changed, update UI and lock toogle to prevent quickly
@@ -235,6 +224,23 @@ var QuickSettings = {
       obj[key] = keypairs[key];
       setlock.set(obj);
     }
+  },
+
+  updateDataIcon: function qs_updateDataIcon(value) {
+    var label = {
+      'lte': '4G', // 4G LTE
+      'ehrpd': '4G', // 4G CDMA
+      'hspa+': 'H+', // 3.5G HSPA+
+      'hsdpa': 'H', 'hsupa': 'H', 'hspa': 'H', // 3.5G HSDPA
+      'evdo0': '3G', 'evdoa': '3G', 'evdob': '3G', '1xrtt': '3G', // 3G CDMA
+      'umts': '3G', // 3G
+      'edge': 'E', // EDGE
+      'is95a': '2G', 'is95b': '2G', // 2G CDMA
+      'gprs': '2G'
+    };
+    var type = label[this.conn.data.type];
+    type = type ? [type, value ? 'true' : 'false'] : ['false'];
+    this.data.dataset.enabled = type.join('-');
   }
 };
 
