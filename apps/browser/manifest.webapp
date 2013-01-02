@@ -32,13 +32,14 @@
   },
   "default_locale": "en-US",
   "icons": {
-    "120": "/style/icons/Browser.png",
-    "60": "/style/icons/60/Browser.png"
+    "120": "/shared/resources/branding/Browser.png",
+    "60": "/shared/resources/branding/Browser.png"
   },
   "activities": {
     "view": {
       "filters": {
-        "type": "url"
+        "type": "url",
+        "url": { "required":true, "regexp":"/^https?:/" }
       }
     }
   }

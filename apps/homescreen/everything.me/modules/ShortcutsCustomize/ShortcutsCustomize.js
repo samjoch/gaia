@@ -7,7 +7,6 @@ Evme.ShortcutsCustomize = new function Evme_ShortcutsCustomize() {
         elParent = options.elParent;
         
         elList = Evme.$create('select', {'multiple': "multiple", 'id': "shortcuts-select"});
-        elList.addEventListener('change', done);
         elList.addEventListener('blur', onHide);
         
         elParent.appendChild(elList);
@@ -66,13 +65,20 @@ Evme.ShortcutsCustomize = new function Evme_ShortcutsCustomize() {
     
     this.Loading = new function Loading() {
         var active = false,
-            ID = 'shortcuts-customize-loading',
-            TEXT_CANCEL = "Cancel";
+            ID = 'shortcuts-customize-loading';
         
         this.show = function loadingShow() {
             if (active) return;
             
-            var el = Evme.$create('div', {'id': ID}, '<menu><button>' + TEXT_CANCEL + '</button></menu>');
+            var el = Evme.$create('div',
+                        {'id': ID},
+                        '<b ' + Evme.Utils.l10nAttr(NAME, 'loading') + '></b>' +
+                        '<div class="loading-wrapper">' +
+                            '<progress class="loading-icon small"></progress>' +
+                        '</div>' +
+                        '<menu>' +
+                            '<button ' + Evme.Utils.l10nAttr(NAME, 'loading-cancel') + '></button>' +
+                        '</menu>');
                       
             Evme.$("button", el, function onItem(elButton) {
                 elButton.addEventListener("click", onLoadingCancel)
@@ -97,6 +103,8 @@ Evme.ShortcutsCustomize = new function Evme_ShortcutsCustomize() {
     
     function onHide() {
         Evme.EventHandler.trigger(NAME, 'hide');
+        
+        done();
     }
     
     function onLoadingCancel(e) {

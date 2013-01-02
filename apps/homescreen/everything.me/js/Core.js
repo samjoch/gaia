@@ -1,5 +1,5 @@
 window.Evme = new function Evme_Core() {
-    var _name = "Core", self = this, logger,
+    var NAME = "Core", self = this, logger,
         recalculateHeightRetries = 1,
         TIMEOUT_BEFORE_INIT_SESSION = "FROM CONFIG",
         OPACITY_CHANGE_DURATION = 300,
@@ -21,13 +21,11 @@ window.Evme = new function Evme_Core() {
             "numberOfAppsToLoad": data.numberOfAppsToLoad,
             "logger": logger,
             "minimumLettersForSearch": data.minimumLettersForSearch,
-            "helper": data.texts.helper,
-            "apps": data.texts.apps,
-            "promptInstallAppText": data.texts.installAppPrompt,
             "timeBeforeAllowingDialogsRemoval": data.timeBeforeAllowingDialogsRemoval,
             "tips": data.tips,
             "searchSources": data.searchSources,
-            "pageViewSources": data.pageViewSources
+            "pageViewSources": data.pageViewSources,
+            "displayInstalledApps": data.apps.displayInstalledApps
         });
 
         Evme.DoATAPI.init({
@@ -48,26 +46,32 @@ window.Evme = new function Evme_Core() {
     this.pageMove = function pageMove(value) {
         Evme.BackgroundImage.changeOpacity(Math.floor(value*100)/100);
     };
-    
+
     this.onShow = function onShow() {
+        document.body.classList.add('evme-displayed');
+
         Evme.Shortcuts.refreshScroll();
+        Evme.Helper.refreshScroll();
     };
     this.onHide = function onHide() {
+        document.body.classList.remove('evme-displayed');
+
         Evme.Brain.Shortcuts.doneEdit();
         Evme.Brain.SmartFolder.closeCurrent();
     };
-    
+
     this.onHideStart = function onHideStart(source) {
         if (source === "homeButtonClick") {
             if (
                 Evme.Brain.Shortcuts.hideIfEditing() ||
                 Evme.Brain.ShortcutsCustomize.isOpen() ||
                 Evme.Brain.ShortcutsCustomize.hideIfRequesting() ||
-                Evme.Brain.SmartFolder.hideIfOpen()
+                Evme.Brain.SmartFolder.hideIfOpen() ||
+                Evme.Brain.Apps.clearIfHas()
             ) {
                 return true;
             }
-        }        
+        }
 
         Evme.Brain.Searchbar.blur();
         return false; // allow navigation to homescreen
@@ -75,30 +79,27 @@ window.Evme = new function Evme_Core() {
 
     function initObjects(data) {
         Evme.ConnectionMessage.init({
-            "texts": data.texts.connection
         });
-        
+
         Evme.Location.init({
-            
+
         });
-        
+
         Evme.Shortcuts.init({
             "el": Evme.$("#shortcuts"),
             "elLoading": Evme.$("#shortcuts-loading"),
-            "shortcutsFavorites": data.texts.shortcutsFavorites,
+            "design": data.design.shortcuts,
             "defaultShortcuts": data._defaultShortcuts
         });
-        
+
         Evme.ShortcutsCustomize.init({
-            "elParent": Evme.Utils.getContainer(),
-            "texts": data.texts.shortcutsFavorites
+            "elParent": Evme.Utils.getContainer()
         });
 
         Evme.Searchbar.init({
             "el": Evme.$("#search-q"),
             "elForm": Evme.$("#search-rapper"),
             "elDefaultText": Evme.$("#default-text"),
-            "texts": data.texts.searchbar,
             "timeBeforeEventPause": data.searchbar.timeBeforeEventPause,
             "timeBeforeEventIdle": data.searchbar.timeBeforeEventIdle,
             "setFocusOnClear": false
@@ -107,14 +108,12 @@ window.Evme = new function Evme_Core() {
         Evme.Helper.init({
             "el": Evme.$("#helper"),
             "elTitle": Evme.$("#search-title"),
-            "elTip": Evme.$("#helper-tip"),
-            "texts": data.texts.helper
+            "elTip": Evme.$("#helper-tip")
         });
 
         Evme.Apps.init({
             "el": Evme.$("#evmeApps"),
             "elHeader": Evme.$("#header"),
-            "texts": data.texts.apps,
             "design": data.design.apps,
             "appHeight": data.apps.appHeight,
             "minHeightForMoreButton": data.minHeightForMoreButton,
@@ -127,8 +126,11 @@ window.Evme = new function Evme_Core() {
         Evme.BackgroundImage.init({
             "el": Evme.$("#search-overlay"),
             "elementsToFade": [Evme.$("#evmeApps"), Evme.$("#header"), Evme.$("#search-header")],
-            "defaultImage": data.defaultBGImage,
-            "texts": data.texts.backgroundImage
+            "defaultImage": data.defaultBGImage
+        });
+
+        Evme.Banner.init({
+            "el": Evme.$("#evmeBanner")
         });
 
         Evme.SearchHistory.init({
@@ -150,6 +152,6 @@ window.Evme = new function Evme_Core() {
             "PAGEVIEW_SOURCES": data.pageViewSources
         });
 
-        Evme.EventHandler.trigger(_name, "init", {"deviceId": Evme.DoATAPI.getDeviceId()});
+        Evme.EventHandler.trigger(NAME, "init", {"deviceId": Evme.DoATAPI.getDeviceId()});
     }
 };

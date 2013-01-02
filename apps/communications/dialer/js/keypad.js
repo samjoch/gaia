@@ -351,7 +351,7 @@ var KeypadManager = {
   },
 
   hangUpCallFromKeypad: function hk_hangUpCallFromKeypad(event) {
-    CallScreen.views.classList.remove('show');
+    CallScreen.body.classList.remove('showKeypad');
     OnCallHandler.end();
   },
 
@@ -384,11 +384,17 @@ var KeypadManager = {
     fakeView.style.fontSize = currentFontSize + 'px';
     fakeView.innerHTML = view.value ? view.value : view.innerHTML;
 
-    var counter = 1;
     var value = fakeView.innerHTML;
+
+    // Guess the possible position of the ellipsis in order to minimize
+    // the following while loop iterations:
+    var counter = value.length -
+      (viewWidth *
+       (fakeView.textContent.length / fakeView.getBoundingClientRect().width));
 
     var newPhoneNumber;
     while (fakeView.getBoundingClientRect().width > viewWidth) {
+
       if (side == 'left') {
         newPhoneNumber = '\u2026' + value.substr(-value.length + counter);
       } else if (side == 'right') {
@@ -458,6 +464,8 @@ var KeypadManager = {
 
         // Sending the DTMF tone if on a call
         if (this._onCall) {
+          // Stop previous tone before dispatching a new one
+          telephony.stopTone();
           telephony.startTone(key);
         }
       }
@@ -477,6 +485,7 @@ var KeypadManager = {
           }
 
           self._longPress = true;
+          self.updateAddContactStatus();
           self._updatePhoneNumberView();
         }, 400, this);
       }
@@ -491,6 +500,7 @@ var KeypadManager = {
 
       if (key == 'delete') {
         this._phoneNumber = this._phoneNumber.slice(0, -1);
+        this.updateAddContactStatus();
       } else if (this.phoneNumberViewContainer.classList.
           contains('keypad-visible')) {
         if (!this._isKeypadClicked) {
@@ -503,8 +513,8 @@ var KeypadManager = {
         }
       } else {
         this._phoneNumber += key;
+        this.updateAddContactStatus();
       }
-
       this._updatePhoneNumberView();
     } else if (event.type == 'mouseup' || event.type == 'mouseleave') {
       // Stop playing the DTMF/tone after a small delay
@@ -533,6 +543,13 @@ var KeypadManager = {
 
       this._updatePhoneNumberView();
     }
+  },
+
+  updateAddContactStatus: function kh_updateAddContactStatus() {
+    if (this._phoneNumber.length === 0)
+      this.callBarAddContact.classList.add('disabled');
+    else
+      this.callBarAddContact.classList.remove('disabled');
   },
 
   updatePhoneNumber: function kh_updatePhoneNumber(number) {

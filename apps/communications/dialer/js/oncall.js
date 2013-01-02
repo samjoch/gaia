@@ -4,6 +4,7 @@ var CallScreen = {
   _ticker: null,
   _screenLock: null,
 
+  body: document.body,
   screen: document.getElementById('call-screen'),
   views: document.getElementById('views'),
 
@@ -29,8 +30,7 @@ var CallScreen = {
   incomingAnswer: document.getElementById('incoming-answer'),
   incomingEnd: document.getElementById('incoming-end'),
   incomingIgnore: document.getElementById('incoming-ignore'),
-
-  swiperWrapper: document.getElementById('swiper-wrapper'),
+  lockedContactPhoto: document.getElementById('locked-contact-photo'),
 
   init: function cs_init() {
     this.muteButton.addEventListener('mouseup', this.toggleMute.bind(this));
@@ -51,15 +51,21 @@ var CallScreen = {
 
     this.calls.addEventListener('click',
                                 OnCallHandler.toggleCalls);
-
   },
 
-  setCallerContactImage: function cs_setCallerContactImage(image_url, force) {
+  setCallerContactImage: function cs_setContactImage(image_url, force, mask) {
     var photoURL;
     var isString = (typeof image_url == 'string');
+    var isLocked = (this.screen.dataset.layout === 'incoming-locked');
+    var target = isLocked ? this.lockedContactPhoto : this.mainContainer;
     photoURL = isString ? image_url : URL.createObjectURL(image_url);
-    if (!this.mainContainer.style.backgroundImage || force) {
-      this.mainContainer.style.backgroundImage = 'url(' + photoURL + ')';
+    if (!target.style.backgroundImage || force) {
+      target.style.backgroundImage = 'url(' + photoURL + ')';
+      if (mask) {
+        target.classList.add('masked');
+      } else {
+        target.classList.remove('masked');
+      }
     }
   },
 
@@ -85,53 +91,26 @@ var CallScreen = {
 
   showKeypad: function cs_showKeypad() {
     KeypadManager.render('oncall');
-    this.views.classList.add('show');
+    this.body.classList.add('showKeypad');
   },
 
   hideKeypad: function cs_hideKeypad() {
     KeypadManager.restorePhoneNumber();
     KeypadManager.restoreAdditionalContactInfo();
     KeypadManager.formatPhoneNumber();
-    this.views.classList.remove('show');
+    this.body.classList.remove('showKeypad');
   },
 
   render: function cs_render(layout_type) {
-    switch (layout_type) {
-      case 'dialing':
-        this.answerButton.classList.add('hide');
-        this.rejectButton.classList.remove('hide');
-        this.rejectButton.classList.add('full-space');
-        this.callToolbar.classList.remove('transparent');
-        this.keypadButton.setAttribute('disabled', 'disabled');
-        this.swiperWrapper.classList.add('hide');
-        break;
-      case 'incoming':
-        this.answerButton.classList.remove('hide');
-        this.rejectButton.classList.remove('hide');
-        this.callToolbar.classList.remove('transparent');
-        this.keypadButton.setAttribute('disabled', 'disabled');
-        this.swiperWrapper.classList.add('hide');
-        break;
-      case 'incoming-locked':
-        this.answerButton.classList.add('hide');
-        this.rejectButton.classList.add('hide');
-        this.callToolbar.classList.add('transparent');
-        this.keypadButton.setAttribute('disabled', 'disabled');
-        this.swiperWrapper.classList.remove('hide');
-        break;
-      case 'connected':
-        this.answerButton.classList.add('hide');
-        this.rejectButton.classList.remove('hide');
-        this.rejectButton.classList.add('full-space');
-        this.callToolbar.classList.remove('transparent');
-        this.swiperWrapper.classList.add('hide');
-        break;
+    this.screen.dataset.layout = layout_type;
+    if (layout_type !== 'connected') {
+      this.keypadButton.setAttribute('disabled', 'disabled');
     }
   },
 
   showIncoming: function cs_showIncoming() {
     // Hiding the keypad
-    this.views.classList.remove('show');
+    this.body.classList.remove('showKeypad');
 
     this.callToolbar.classList.add('transparent');
     this.incomingContainer.classList.add('displayed');
@@ -176,9 +155,12 @@ var OnCallHandler = (function onCallHandler() {
   var ringing = false;
 
   /* === Settings === */
-  var activePhoneSound = true;
-  SettingsListener.observe('audio.volume.notification', true, function(value) {
+  var activePhoneSound = null;
+  SettingsListener.observe('ring.enabled', true, function(value) {
     activePhoneSound = !!value;
+    if (ringing && activePhoneSound) {
+      ringtonePlayer.play();
+    }
   });
 
   var selectedPhoneSound = '';
@@ -187,7 +169,7 @@ var OnCallHandler = (function onCallHandler() {
     ringtonePlayer.pause();
     ringtonePlayer.src = value;
 
-    if (ringing) {
+    if (ringing && activePhoneSound) {
       ringtonePlayer.play();
     }
   });
@@ -203,7 +185,7 @@ var OnCallHandler = (function onCallHandler() {
   ringtonePlayer.src = selectedPhoneSound;
   ringtonePlayer.loop = true;
 
-  var activateVibration = true;
+  var activateVibration = null;
   SettingsListener.observe('vibration.enabled', true, function(value) {
     activateVibration = !!value;
   });
@@ -252,23 +234,22 @@ var OnCallHandler = (function onCallHandler() {
 
       if (!stillHere) {
         removeCall(index);
-        return;
       }
     });
 
     // Letting the layout know how many calls we're handling
-    CallScreen.calls.dataset.count = handledCalls.length;
-
-    if (CallScreen.calls.dataset.count === 0) {
+    if (handledCalls.length === 0) {
       exitCallScreen(false);
+    } else {
+      CallScreen.calls.dataset.count = handledCalls.length;
     }
-
   }
 
   function addCall(call) {
     // Once we already have 1 call, we only care about incomings
-    if (handledCalls.length && (call.state != 'incoming'))
+    if (handledCalls.length && (call.state != 'incoming')) {
       return;
+    }
 
     // No more room
     if (handledCalls.length >= CALLS_LIMIT) {
@@ -292,10 +273,14 @@ var OnCallHandler = (function onCallHandler() {
       if (document.mozHidden) {
         window.addEventListener('mozvisibilitychange', function waitOn() {
           window.removeEventListener('mozvisibilitychange', waitOn);
-          navigator.vibrate([100, 100, 100]);
+          if (activateVibration) {
+            navigator.vibrate([100, 100, 100]);
+          }
         });
       } else {
-        navigator.vibrate([100, 100, 100]);
+        if (activateVibration) {
+          navigator.vibrate([100, 100, 100]);
+        }
       }
 
       LazyL10n.get(function localized(_) {
@@ -322,12 +307,32 @@ var OnCallHandler = (function onCallHandler() {
   }
 
   function removeCall(index) {
+    var removedCall = handledCalls[index];
     handledCalls.splice(index, 1);
 
     if (handledCalls.length > 0) {
-      // Resuming the first remaining call
-      handledCalls[0].call.resume();
+      // Only hiding the call if we have another one to display
+      removedCall.hide();
       CallScreen.hideIncoming();
+
+      var remainingCall = handledCalls[0];
+      if (remainingCall.call.state == 'incoming') {
+        // The active call ended, showing the incoming call
+        remainingCall.show();
+
+        // This is the difference between an endAndAnswer() and
+        // the active call being disconnected while a call is waiting
+        setTimeout(function nextTick() {
+          if (remainingCall.call.state == 'incoming') {
+            CallScreen.render('incoming');
+          };
+        });
+
+        return;
+      }
+
+      // The incoming call was rejected, resuming...
+      remainingCall.call.resume();
       return;
     }
 
@@ -336,16 +341,20 @@ var OnCallHandler = (function onCallHandler() {
 
   function handleFirstIncoming(call) {
     var vibrateInterval = 0;
-    if (activateVibration) {
+    if (activateVibration != false) {
       vibrateInterval = window.setInterval(function vibrate() {
-        if ('vibrate' in navigator) {
+        // Wait for the setting value to return before starting a vibration.
+        if ('vibrate' in navigator && activateVibration) {
           navigator.vibrate([200]);
         }
       }, 600);
     }
 
-    if (activePhoneSound) {
+    if (activePhoneSound == true) {
       ringtonePlayer.play();
+      ringing = true;
+    } else if (activePhoneSound == null) {
+      // Let's wait for the setting to return before playing any sound.
       ringing = true;
     }
 
@@ -380,19 +389,20 @@ var OnCallHandler = (function onCallHandler() {
     displayed = !displayed;
     animating = true;
 
-    CallScreen.screen.classList.remove('animate');
-    CallScreen.screen.classList.toggle('prerender');
+    var callScreen = CallScreen.screen;
+    callScreen.classList.remove('animate');
+    callScreen.classList.toggle('prerender');
 
     window.addEventListener('MozAfterPaint', function ch_finishAfterPaint() {
       window.removeEventListener('MozAfterPaint', ch_finishAfterPaint);
 
       window.setTimeout(function cs_transitionNextLoop() {
-        CallScreen.screen.classList.add('animate');
-        CallScreen.screen.classList.toggle('displayed');
-        CallScreen.screen.classList.toggle('prerender');
+        callScreen.classList.add('animate');
+        callScreen.classList.toggle('displayed');
+        callScreen.classList.toggle('prerender');
 
-        CallScreen.screen.addEventListener('transitionend', function trWait() {
-          CallScreen.screen.removeEventListener('transitionend', trWait);
+        callScreen.addEventListener('transitionend', function trWait() {
+          callScreen.removeEventListener('transitionend', trWait);
 
           animating = false;
 
@@ -407,8 +417,9 @@ var OnCallHandler = (function onCallHandler() {
   }
 
   function exitCallScreen(animate) {
-    if (closing)
+    if (closing) {
       return;
+    }
 
     if (cpuLock) {
       cpuLock.unlock();
@@ -416,6 +427,10 @@ var OnCallHandler = (function onCallHandler() {
     }
 
     closing = true;
+
+    if (Swiper) {
+      Swiper.setElasticEnabled(false);
+    }
 
     if (animate && !animating) {
       toggleScreen();
@@ -502,10 +517,17 @@ var OnCallHandler = (function onCallHandler() {
   /* === User Actions === */
   function answer() {
     // We should always have only 1 call here
-    if (!handledCalls.length)
+    if (!handledCalls.length) {
       return;
+    }
 
     handledCalls[0].call.answer();
+
+    if (CallScreen.screen.dataset.layout === 'incoming-locked') {
+      CallScreen.mainContainer.style.backgroundImage =
+        CallScreen.lockedContactPhoto.style.backgroundImage;
+    }
+
     CallScreen.render('connected');
   }
 
@@ -532,8 +554,9 @@ var OnCallHandler = (function onCallHandler() {
   }
 
   function toggleCalls() {
-    if (handledCalls.length < 2)
+    if (handledCalls.length < 2) {
       return;
+    }
 
     telephony.active.hold();
   }
@@ -612,18 +635,13 @@ window.addEventListener('load', function callSetup(evt) {
   OnCallHandler.setup();
   CallScreen.init();
   CallScreen.syncSpeakerEnabled();
-
   KeypadManager.init(true);
 
-  var isLocked = (window.location.hash === '#locked');
-  // After investigating in #815629, it seems that
-  // lock screen animation over the Wallpaper image is not
-  // performing well, so we are not painting it when is locked
-  // Being tracked in #817988
-  if (navigator.mozSettings && !isLocked) {
+  if (navigator.mozSettings) {
     var req = navigator.mozSettings.createLock().get('wallpaper.image');
     req.onsuccess = function cs_wi_onsuccess() {
-      CallScreen.setCallerContactImage(req.result['wallpaper.image']);
+      CallScreen.setCallerContactImage(
+        req.result['wallpaper.image'], false, true);
     };
   }
 });

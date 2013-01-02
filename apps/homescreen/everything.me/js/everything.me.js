@@ -27,6 +27,7 @@ var EverythingME = {
       });
 
       EverythingME.load(function success() {
+        EvmeFacade.onShow();
         var loadingOverlay = document.querySelector('#loading-overlay');
         loadingOverlay.style.opacity = 0;
         setTimeout(function starting() {
@@ -76,6 +77,7 @@ var EverythingME = {
                     'js/Brain.js',
                     'modules/Apps/Apps.js',
                     'modules/BackgroundImage/BackgroundImage.js',
+                    'modules/Banner/Banner.js',
                     'modules/Dialog/Dialog.js',
                     'modules/Location/Location.js',
                     'modules/Shortcuts/Shortcuts.js',
@@ -101,6 +103,7 @@ var EverythingME = {
     var css_files = ['css/common.css',
                      'modules/Apps/Apps.css',
                      'modules/BackgroundImage/BackgroundImage.css',
+                     'modules/Banner/Banner.css',
                      'modules/Dialog/Dialog.css',
                      'modules/Shortcuts/Shortcuts.css',
                      'modules/ShortcutsCustomize/ShortcutsCustomize.css',
