@@ -57,64 +57,64 @@ html, body {
 #quick-settings > #quick-settings-wifi {
   background-image: url(images/wifi-off.png);
 }
-#quick-settings > #quick-settings-wifi[data-enabled="true"] {
+#quick-settings > #quick-settings-wifi[data-enabled] {
   background-image: url(images/wifi-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="false"] {
+#quick-settings > #quick-settings-data {
   background-image: url(images/data-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="2G-false"] {
+#quick-settings > #quick-settings-data[data-network="2G"]  {
   background-image: url(images/data-2g-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="2G-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="2G"] {
   background-image: url(images/data-2g-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="3G-false"] {
+#quick-settings > #quick-settings-data[data-network="3G"] {
   background-image: url(images/data-3g-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="3G-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="3G"] {
   background-image: url(images/data-3g-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="4G-false"] {
+#quick-settings > #quick-settings-data[data-network="4G"] {
   background-image: url(images/data-4g-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="4G-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="4G"] {
   background-image: url(images/data-4g-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="E-false"] {
+#quick-settings > #quick-settings-data[data-network="E"] {
   background-image: url(images/data-e-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="E-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="E"] {
   background-image: url(images/data-e-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="H-false"] {
+#quick-settings > #quick-settings-data[data-network="H"] {
   background-image: url(images/data-h-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="H-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="H"] {
   background-image: url(images/data-h-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="H+-false"] {
+#quick-settings > #quick-settings-data[data-network="H+"] {
   background-image: url(images/data-h+-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="H+-true"] {
+#quick-settings > #quick-settings-data[data-enabled][data-network="H+"] {
   background-image: url(images/data-h+-on.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="O-false"] {
-  background-image: url(images/data-h+-off.png);
+#quick-settings > #quick-settings-data[data-network="O"] {
+  background-image: url(images/data-o-off.png);
 }
-#quick-settings > #quick-settings-data[data-enabled="O-true"] {
-  background-image: url(images/data-h+-on.png);
+#quick-settings > #quick-settings-data[data-enabled][data-network="O"] {
+  background-image: url(images/data-o-on.png);
 }
 #quick-settings > #quick-settings-bluetooth {
   background-image: url(images/bluetooth-off.png);
 }
-#quick-settings > #quick-settings-bluetooth[data-enabled="true"] {
+#quick-settings > #quick-settings-bluetooth[data-enabled] {
   background-image: url(images/bluetooth-on.png);
 }
 #quick-settings > #quick-settings-power-save {
   background-image: url(images/power-save-off.png);
 }
-#quick-settings > #quick-settings-power-save[data-enabled="true"] {
+#quick-settings > #quick-settings-power-save[data-enabled] {
   background-image: url(images/power-save-on.png);
 }
 #quick-settings > #quick-settings-full-app {
