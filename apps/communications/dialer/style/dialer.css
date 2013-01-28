@@ -73,15 +73,15 @@ body.hidden *[data-l10n-id] {
 /* Structure for toolbar*/
 
 .icon-recents:after {
-  background-image: url("images/recents.png") !important;
+  background-image: -moz-image-rect(url("images/sprite.png"), 0, 90, 80, 60) !important;
 }
 
 .icon-contacts:after {
-  background-image: url("images/contacts.png") !important;
+  background-image: -moz-image-rect(url("images/sprite.png"), 0, 30, 80, 0) !important;
 }
 
 .icon-keypad:after {
-  background-image: url("images/dialpad.png") !important;
+  background-image: -moz-image-rect(url("images/sprite.png"), 0, 60, 80, 30) !important;
 }
 
 .with-keyboard #views, .with-keyboard #contacts-view,

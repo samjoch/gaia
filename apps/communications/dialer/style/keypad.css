@@ -59,7 +59,7 @@ article:not(:target) #keypad-delete {
 #keypad-delete > div {
   width: 3.3rem;
   height: 2.4rem;
-  background: url('images/dialer_icon_delete.png');
+  background: -moz-image-rect(url("images/sprite.png"), 0, 123, 48, 90);
   background-repeat: no-repeat;
 }
 
@@ -162,11 +162,11 @@ article:not(:target) #keypad-delete {
 }
 
 .voicemail {
-  background-image: url('images/voicemail.png');
+  background-image: -moz-image-rect(url("images/sprite.png"), 48, 112, 59, 90);
 }
 
 .asterisk {
-  background-image: url('images/asterisk.png');
+  background-image: -moz-image-rect(url("images/sprite.png"), 80, 30, 110, 0);
   background-repeat: no-repeat;
   height: 3rem;
   width: 3rem;
@@ -177,7 +177,7 @@ article:not(:target) #keypad-delete {
 }
 
 .sharp {
-  background-image: url('images/sharp.png');
+  background-image: -moz-image-rect(url("images/sprite.png"), 80, 60, 110, 30);
   background-repeat: no-repeat;
   height: 3rem;
   width: 3rem;
@@ -205,7 +205,7 @@ article:not(:target) #keypad-delete {
 #keypad-callbar-cancel {
   display: table-cell;
   width: 9rem;
-  background: url("images/btn_generic.png") repeat-x;
+  background: -moz-image-rect(url("images/sprite.png"), 59, 91, 89, 90) repeat-x;
   background-size: auto 100%;
   border: .1rem solid #242B36;
   border-radius: .2rem;
@@ -238,7 +238,7 @@ article:not(:target) #keypad-delete {
 #keypad-callbar-call-action {
   display: table-cell;
   width: 100%;
-  background: url("images/btn_pick_up.png") repeat-x;
+  background: -moz-image-rect(url("images/sprite.png"), 59, 92, 89, 91) repeat-x;
   background-size: auto 100%;
   border: 0;
   border-radius: .2rem;
@@ -253,7 +253,7 @@ article:not(:target) #keypad-delete {
   margin: auto;
   width: 4rem;
   height: 4rem;
-  background-image: url("images/ActionIcon_40x40_addcontact.png");
+  background-image: -moz-image-rect(url("images/sprite.png"), 110, 40, 150, 0);
   background-repeat: no-repeat;
   background-size: 4rem 4rem;
   background-position: center;
@@ -263,7 +263,7 @@ article:not(:target) #keypad-delete {
   margin: auto;
   width: 4rem;
   height: 4rem;
-  background-image: url("images/ActionIcon_40x40_pickup.png");
+  background-image: -moz-image-rect(url("images/sprite.png"), 110, 80, 150, 40);
   background-repeat: no-repeat;
   background-size: 4rem 4rem;
   background-position: center;
@@ -318,7 +318,7 @@ article:not(:target) #keypad-delete {
 }
 
 #keypad-hidebar-hide-keypad-action {
-  background: url("images/btn_generic.png") repeat-x;
+  background: -moz-image-rect(url("images/sprite.png"), 59, 91, 89, 90) repeat-x;
   background-size: auto 100%;
   opacity: 1.0;
   margin: 1rem 1.5rem 1.5rem .5rem;
