@@ -72,16 +72,37 @@ body.hidden *[data-l10n-id] {
 
 /* Structure for toolbar*/
 
+[role="tablist"] > [role="tab"] > a.icon:after {
+  background-image: url("images/sprite.png");
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 3rem;
+  height: 4rem;
+  left: calc(100% / 2 - 1.5rem);
+}
+
 .icon-recents:after {
-  background-image: -moz-image-rect(url("images/sprite.png"), 0, 90, 80, 60) !important;
+  background-position: -6rem 0 !important;
 }
 
 .icon-contacts:after {
-  background-image: -moz-image-rect(url("images/sprite.png"), 0, 30, 80, 0) !important;
+  background-position: 0 0 !important;
 }
 
 .icon-keypad:after {
-  background-image: -moz-image-rect(url("images/sprite.png"), 0, 60, 80, 30) !important;
+  background-position: -3rem 0 !important;
+}
+
+[role="tablist"] > [role="tab"]:target > a.icon-recents:after {
+  background-position: -6rem -4rem !important;
+}
+
+[role="tablist"] > [role="tab"]:target > a.icon-contacts:after {
+  background-position: 0 -4rem !important;
+}
+
+[role="tablist"] > [role="tab"]:target > a.icon-keypad:after {
+  background-position: -3rem -4rem !important;
 }
 
 .with-keyboard #views, .with-keyboard #contacts-view,
