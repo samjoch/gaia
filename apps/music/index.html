@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style/music.css" type="text/css" />
     <!-- Include shared building blocks -->
     <link rel="stylesheet" type="text/css" href="shared/style/headers.css"/>
+    <link rel="stylesheet" type="text/css" href="shared/style_unstable/seekbars.css"/>
     <!-- Localization -->
     <link rel="resource" type="application/l10n" href="locales/locales.ini">
     <!-- Shared code -->
@@ -15,6 +16,7 @@
     <script defer src="shared/js/mediadb.js"></script>
     <script defer src="shared/js/lazy_loader.js"></script>
     <script defer src="shared/js/async_storage.js"></script>
+    <script defer src="shared/js/polyfill.js"></script>
     <!-- Specific code -->
     <script defer src="js/utils.js"></script>
     <script defer src="js/music.js"></script>
@@ -65,13 +67,10 @@
             <button id="player-album-shuffle" class="player-cover-button"></button>
           </div>
         </div>
-        <div id="player-seek">
-          <span id="player-seek-elapsed">00:00</span>
-          <div id="player-seek-bar">
-            <progress id="player-seek-bar-progress" value="0"></progress>
-            <div id="player-seek-bar-indicator"></div>
-          </div>
-          <span id="player-seek-remaining">00:00</span>
+        <div id="player-seek" role="slider" data-silver="true">
+          <span id="player-seek-elapsed">00:00</span
+          ><input type="range" value="0" max="100" min="0" step="1"
+          ><span id="player-seek-remaining">00:00</span>
         </div>
         <div id="player-controls">
           <button id="player-controls-previous" class="player-controls-button"></button>

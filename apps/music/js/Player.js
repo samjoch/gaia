@@ -68,6 +68,8 @@ var PlayerView = {
   },
 
   init: function pv_init(needSettings) {
+    bug344618_polyfill();
+
     this.artist = document.getElementById('player-cover-artist');
     this.album = document.getElementById('player-cover-album');
 
@@ -80,9 +82,8 @@ var PlayerView = {
 
     this.ratings = document.getElementById('player-album-rating').children;
 
-    this.seekRegion = document.getElementById('player-seek-bar');
-    this.seekBar = document.getElementById('player-seek-bar-progress');
-    this.seekIndicator = document.getElementById('player-seek-bar-indicator');
+    this.seek = document.getElementById('player-seek');
+    this.seekInput = this.seek.querySelector('input[type="range"]');
     this.seekElapsed = document.getElementById('player-seek-elapsed');
     this.seekRemaining = document.getElementById('player-seek-remaining');
 
@@ -102,9 +103,8 @@ var PlayerView = {
 
     // Seeking audio too frequently causes the Desktop build hangs
     // A related Bug 739094 in Bugzilla
-    this.seekRegion.addEventListener('mousedown', this);
-    this.seekRegion.addEventListener('mousemove', this);
-    this.seekRegion.addEventListener('mouseup', this);
+    this.seekInput.addEventListener('change', this);
+    this.seekInput.addEventListener('touchend', this);
 
     this.audio.addEventListener('play', this);
     this.audio.addEventListener('pause', this);
@@ -511,18 +511,10 @@ var PlayerView = {
   },
 
   setSeekBar: function pv_setSeekBar(startTime, endTime, currentTime) {
-    this.seekBar.min = startTime;
-    this.seekBar.max = endTime;
-    this.seekBar.value = currentTime;
-
-    // if endTime is 0, that's a reset of seekBar
-    var ratio = (endTime != 0) ? (currentTime / endTime) : 0;
-    // The width of the seek indicator must be also considered
-    // so we divide the width of seek indicator by 2 to find the center point
-    var x = (ratio * this.seekBar.offsetWidth -
-      this.seekIndicator.offsetWidth / 2) + 'px';
-    this.seekIndicator.style.transform = 'translateX(' + x + ')';
-
+    startTime = startTime || 0;
+    this.seekInput.setMin(startTime);
+    this.seekInput.setMax(endTime);
+    this.seekInput.setValue(currentTime);
     this.seekElapsed.textContent = formatTime(currentTime);
     this.seekRemaining.textContent = '-' + formatTime(endTime - currentTime);
   },
@@ -606,37 +598,12 @@ var PlayerView = {
       case 'pause':
         this.playControl.classList.add('is-pause');
         break;
-      case 'mousedown':
-      case 'mousemove':
-        if (evt.type === 'mousedown') {
-          target.setCapture(false);
-          MouseEventShim.setCapture();
-          this.isSeeking = true;
-          this.seekIndicator.classList.add('highlight');
-        }
-        if (this.isSeeking && this.audio.duration > 0) {
-          // target is the seek bar
-          var x = (evt.clientX - target.offsetLeft) / target.offsetWidth;
-          if (x < 0)
-            x = 0;
-          if (x > 1)
-            x = 1;
-          var seekTime = x * this.seekBar.max;
-          this.setSeekBar(this.audio.startTime, this.audio.duration, seekTime);
-        }
-        break;
-      case 'mouseup':
-        this.isSeeking = false;
-        this.seekIndicator.classList.remove('highlight');
-
+      case 'change':
+      case 'touchend':
+        this.seek.classList[evt.type == 'change' ? 'add' : 'remove']('active');
+        this.isSeeking = evt.type == 'change' ? true : false;
         if (this.audio.duration > 0) {
-          var x = (evt.clientX - target.offsetLeft) / target.offsetWidth;
-          if (x < 0)
-            x = 0;
-          if (x > 1)
-            x = 1;
-          var seekTime = x * this.seekBar.max;
-          this.seekAudio(seekTime);
+          this.seekAudio(this.seekInput.value);
         }
         break;
       case 'timeupdate':

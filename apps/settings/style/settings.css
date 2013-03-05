@@ -341,40 +341,27 @@ section li.password > p {
  * Volume & Brightness: min/max icons
  */
 
-ul li > label .range-icons {
+.icon.volume- {
+  background-image: url(images/range_icons_volume_min.png);
+}
+.icon.volume-- {
+  background-image: url(images/range_icons_volume_max.png);
+}
+.icon.brightness- {
+  background-image: url(images/range_icons_brightness_min.png);
+}
+.icon.brightness-- {
+  background-image: url(images/range_icons_brightness_max.png);
+}
+ul li > [role="slider"] {
+  padding: 0 2.6rem;
+}
+#brightness-manual {
   position: absolute;
-  top: calc(50% - 1.5rem);
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 0 auto;
-  width: calc(100% - 4.1rem);
-  height: 3rem;
+  visibility: hidden;
+  padding-top: 1.5rem;
+  width: 100%;
 }
-
-ul li > label .range-icons.volume {
-  background:
-    url(images/range_icons_volume_min.png) no-repeat 0 50%,
-    url(images/range_icons_volume_max.png) no-repeat 100% 50%;
-}
-
-ul li > label .range-icons.brightness {
-  background:
-    url(images/range_icons_brightness_min.png) no-repeat 0 50%,
-    url(images/range_icons_brightness_max.png) no-repeat 100% 50%;
-  left: 2.5rem;
-  right: auto;
-}
-
-#brightness-manual div {
-  position: relative;
-  top: calc(50% - 1.5rem);
-  left: 7.5rem;
-  right: 7.5rem;
-  height: 3rem;
-  width: calc(100% - 15rem);
-}
-
 
 /******************************************************************************
  * SIM Toolkit
@@ -497,3 +484,11 @@ html[dir="rtl"] label[for^="pwd"] {
   padding-right: 3rem;
 }
 
+/******************************************************************************
+ * Helpers
+ */
+
+#sound header,
+#sound ul {
+  overflow: visible;
+}

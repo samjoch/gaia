@@ -4,8 +4,8 @@ var dom = {};
 
 var ids = ['player', 'thumbnails', 'overlay', 'overlay-title',
            'overlay-text', 'videoControls', 'videoFrame', 'videoBar',
-           'close', 'play', 'playHead', 'timeSlider', 'elapsedTime',
-           'video-title', 'duration-text', 'elapsed-text', 'bufferedTime',
+           'close', 'play', 'playHead', 'timeSlider',
+           'video-title', 'duration-text', 'elapsed-text',
            'slider-wrapper', 'throbber', 'delete-video-button'];
 
 ids.forEach(function createElementRef(name) {
@@ -13,6 +13,7 @@ ids.forEach(function createElementRef(name) {
 });
 
 dom.player.mozAudioChannelType = 'content';
+dom.slider = timeSlider.querySelector('input');
 
 var playing = false;
 
@@ -52,6 +53,7 @@ var fullscreenCallback;
 var FROMCAMERA = /^DCIM\/\d{3}MZLLA\/VID_\d{4}\.3gp$/;
 
 function init() {
+  bug344618_polyfill();
 
   videodb = new MediaDB('videos', metaDataParser);
 
@@ -391,6 +393,17 @@ function setVideoPlaying(playing) {
   }
 }
 
+function inVideoBar(el) {
+  if (el === dom.videoBar) { return true; }
+  var i = 3;
+  while (i > 0) {
+    if (el.parentNode === dom.videoBar) { return true; }
+    el = el.parentNode;
+    i--;
+  }
+  return false;
+}
+
 function playerMousedown(event) {
   // If we interact with the controls before they fade away,
   // cancel the fade
@@ -398,6 +411,9 @@ function playerMousedown(event) {
     clearTimeout(controlFadeTimeout);
     controlFadeTimeout = null;
   }
+
+  var isInVideoBar = inVideoBar(event.target);
+  if (isInVideoBar) { controlShowing = true }
   if (!controlShowing) {
     setControlsVisibility(true);
     return;
@@ -406,8 +422,7 @@ function playerMousedown(event) {
     setVideoPlaying(dom.player.paused);
   } else if (event.target == dom.close) {
     document.mozCancelFullScreen();
-  } else if (event.target == dom.sliderWrapper) {
-    dragSlider(event);
+  } else if (isInVideoBar) {
   } else {
     setControlsVisibility(false);
   }
@@ -655,6 +670,7 @@ function pause() {
 
 // Update the progress bar and play head as the video plays
 function timeUpdated() {
+
   if (controlShowing) {
     // We can't update a progress bar if we don't know how long
     // the video is. It is kind of a bug that the <video> element
@@ -662,14 +678,10 @@ function timeUpdated() {
     if (dom.player.duration === Infinity || dom.player.duration === 0) {
       return;
     }
-
-    var percent = (dom.player.currentTime / dom.player.duration) * 100 + '%';
-
+    dom.slider.setMax(dom.player.duration);
     dom.elapsedText.textContent = formatDuration(dom.player.currentTime);
-    dom.elapsedTime.style.width = percent;
-    // Don't move the play head if the user is dragging it.
     if (!dragging)
-      dom.playHead.style.left = percent;
+      dom.slider.setValue(dom.player.currentTime);
   }
 
   // Since we don't always get reliable 'ended' events, see if
@@ -691,56 +703,30 @@ function timeUpdated() {
 
 // handle drags on the time slider
 function dragSlider(e) {
-
   var isPaused = dom.player.paused;
   dragging = true;
-
+  dom.timeSlider.classList.add('active');
   // We can't do anything if we don't know our duration
   if (dom.player.duration === Infinity)
     return;
 
   if (!isPaused) {
-    dom.player.pause();
+    pause();
   }
 
-  // Capture all mouse moves and the mouse up
-  document.addEventListener('mousemove', mousemoveHandler, true);
-  document.addEventListener('mouseup', mouseupHandler, true);
+  dom.player.currentTime = dom.slider.value;
+  dom.elapsedText.textContent = formatDuration(dom.player.currentTime);
+}
 
-  function position(event) {
-    var rect = dom.sliderWrapper.getBoundingClientRect();
-    var position = (event.clientX - rect.left) / rect.width;
-    position = Math.max(position, 0);
-    position = Math.min(position, 1);
-    return position;
+function stopDragSlider(e) {
+  dragging = false;
+  var isPaused = dom.player.paused;
+  dom.timeSlider.classList.remove('active');
+  if (dom.player.currentTime === dom.player.duration) {
+    pause();
+  } else if (!isPaused) {
+    play();
   }
-
-  function mouseupHandler(event) {
-    document.removeEventListener('mousemove', mousemoveHandler, true);
-    document.removeEventListener('mouseup', mouseupHandler, true);
-
-    dragging = false;
-
-    dom.playHead.classList.remove('active');
-
-    if (dom.player.currentTime === dom.player.duration) {
-      pause();
-    } else if (!isPaused) {
-      dom.player.play();
-    }
-  }
-
-  function mousemoveHandler(event) {
-    var pos = position(event);
-    var percent = pos * 100 + '%';
-    dom.playHead.classList.add('active');
-    dom.playHead.style.left = percent;
-    dom.elapsedTime.style.width = percent;
-    dom.player.currentTime = dom.player.duration * pos;
-    dom.elapsedText.textContent = formatDuration(dom.player.currentTime);
-  }
-
-  mousemoveHandler(e);
 }
 
 // XXX if we don't have metadata about the video name
@@ -970,6 +956,8 @@ function restoreVideo() {
 
 // show|hide controls over the player
 dom.videoControls.addEventListener('mousedown', playerMousedown);
+dom.slider.addEventListener('change', dragSlider, false);
+dom.slider.addEventListener('touchend', stopDragSlider, false);
 
 // Rescale when window size changes. This should get called when
 // orientation changes and when we go into fullscreen

@@ -6,6 +6,7 @@
     <title>Videos</title>
     <link rel="resource" type="application/l10n" href="locales/locales.ini" />
     <link rel="stylesheet" type="text/css" href="shared/style/headers.css">
+    <link rel="stylesheet" type="text/css" href="shared/style_unstable/seekbars.css"/>
     <link rel="stylesheet" type="text/css" href="style/video.css" />
 
     <script defer src="shared/js/l10n.js"></script>
@@ -13,6 +14,7 @@
     <script defer src="shared/js/blobview.js"></script>
     <script defer src="shared/js/media/get_video_rotation.js"></script>
     <script defer src="shared/js/mouse_event_shim.js"></script>
+    <script defer src="shared/js/polyfill.js"></script>
     <script defer src="js/video.js"></script>
   </head>
   <body role="application" class="skin-dark">
@@ -42,15 +44,10 @@
 
           <footer id="videoBar">
             <button id="play"></button>
-            <div id="timeSlider">
-              <span id="elapsed-text"></span>
-              <div id="slider-wrapper">
-                <div id="elapsedTime" class="progress"></div>
-                <div id="bufferedTime" class="progress"></div>
-                <div id="timeBackground" class="progress"></div>
-                <button id="playHead"></button>
-              </div>
-              <span id="duration-text"></span>
+            <div id="timeSlider" role="slider" data-silver="true">
+              <span id="elapsed-text">00:00</span
+              ><input type="range" value="0" min="0" max="0" step="0"
+              ><span id="duration-text">00:00</span>
             </div>
           </footer>
         </section>

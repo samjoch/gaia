@@ -38,6 +38,7 @@
     <!-- shared helper library -->
     <!--<script defer src="shared/js/mouse_event_shim.js"></script>-->
     <!--<script defer src="shared/js/mobile_operator.js"></script>-->
+    <script defer src="shared/js/polyfill.js"></script>
 
     <!-- all non-#root panels will lazy-load their own scripts -->
   </head>
@@ -1087,17 +1088,19 @@
       <ul>
         <li>
           <p data-l10n-id="ringer-and-notification-sound">Ringer & Notifications</p>
-          <label>
-            <input type="range" name="audio.volume.notification" step="1" min="0" value="15" max="15">
-            <span class="range-icons volume"></span>
-          </label>
+          <div role="slider" aria-valuemin="0" aria-valuenow="80" aria-valuemax="100" aria-valuetext="slider description">
+            <span class="icon volume-"></span
+            ><input type="range" name="audio.volume.notification" step="1" min="0" value="15" max="15" data-setting
+            ><span class="icon volume--"></span>
+          </div>
         </li>
         <li>
           <p data-l10n-id="alarm-sound">Alarm</p>
-          <label>
-            <input type="range" name="audio.volume.alarm" step="1" min="0" value="15" max="15">
-            <span class="range-icons volume"></span>
-          </label>
+          <div role="slider" aria-valuemin="0" aria-valuenow="80" aria-valuemax="100" aria-valuetext="slider description">
+            <span class="icon volume-"></span
+            ><input type="range" name="audio.volume.alarm" step="1" min="0" value="15" max="15" data-setting
+            ><span class="icon volume--"></span>
+          </div>
         </li>
       </ul>
 
@@ -1155,6 +1158,7 @@
       </ul>
 
       <script src="js/sound.js"></script>
+      <link rel="stylesheet" type="text/css" href="shared/style_unstable/seekbars.css"/>
       <link rel="stylesheet" type="text/css" href="shared/style/buttons.css"/>
       -->
     </section>
@@ -1186,10 +1190,11 @@
           <a data-l10n-id="brightness-autoAdjust">Adjust Automatically</a>
         </li>
         <li id="brightness-manual">
-          <label>
-            <input type="range" name="screen.brightness" min="0.1" value="0.5" max="1" />
-            <span class="range-icons brightness"></span>
-          </label>
+          <div role="slider" aria-valuemin="0" aria-valuenow="80" aria-valuemax="100" aria-valuetext="slider description">
+            <span class="icon brightness-"></span
+            ><input type="range" name="screen.brightness" step="0.1" min="0.1" value="0.5" max="1" data-setting
+            ><span class="icon brightness--"></span>
+          </div>
         </li>
         <li id="screen-timeout">
           <p data-l10n-id="screen-timeout">Screen Timeout</p>
@@ -1208,6 +1213,7 @@
 
       <script src="js/wallpaper.js"></script>
       <link rel="stylesheet" type="text/css" href="shared/style/buttons.css"/>
+      <link rel="stylesheet" type="text/css" href="shared/style_unstable/seekbars.css"/>
       -->
     </section>
 
@@ -2685,4 +2691,3 @@
     </section>
   </body>
 </html>
-

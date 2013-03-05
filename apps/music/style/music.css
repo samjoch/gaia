@@ -706,91 +706,38 @@ button::-moz-focus-inner {
 
 #player-seek {
   position: relative;
+  z-index: 1;
   width: 100%;
-  height: 4.5rem;
+  height: 3.8rem;
+  padding-top: 0.7rem;
   background: url('./images/scroll_bar_bg.png');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100% 2.1rem;
   background-color: #151515;
-  overflow: hidden;
 }
 
-#player-seek-elapsed, 
-#player-seek-bar, 
+#player-seek.active span {
+  color: #00caf2;
+}
+
+/* customized slider */
+#player-seek div {
+  width: calc(100% - 2 * 15% - 4rem);
+}
+
+#player-seek-elapsed {
+  margin-left: 0.5rem;
+}
+
 #player-seek-remaining {
-  position: relative;
-  float: left;
+  margin-right: 0.5rem;
 }
 
-#player-seek-elapsed, 
-#player-seek-remaining {  
-  top: calc(50% - 0.69rem);
-  width: 18%;
-  line-height: 1.38rem;
+#player-seek-elapsed,
+#player-seek-remaining {
   font-size: 1.4rem;
-  font-weight: 500;
-  color: #a1afb2;
-  text-align: center;
-}
-
-#player-seek-bar {
-  width: 60%;
-  height: 100%;
-  padding: 0 2%;
-}
-
-#player-seek-bar-progress {
-  pointer-events: none;
-  -moz-appearance: none;
-  position: absolute;
-  top: calc(50% - 0.15rem);
-  left: 2.5%;
-  width: 95%;
-  height: 0.3rem;
-  border-radius: 5px;
-  border-width: 0px;
-  box-shadow: 1px 1px rgba(255, 255, 255, 0.2);
-  background: url("./images/timeline.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-#player-seek-bar-progress::-moz-progress-bar {
-  border-radius: 5px;
-  background: url("./images/timeline_filled.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-#player-seek-bar-indicator {
-  position: absolute;
-  top: calc(50% - 4.05rem);
-  width: 6.5rem;
-  height: 6.5rem;
-  border-radius: 50%;
-  background-image: url("./images/scrubber.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border: solid 0.8rem transparent;
-  transition: background-color 300ms ease,
-              border 300ms ease;
-  pointer-events: none;
-}
-
-#player-seek-bar-indicator.highlight {
-  /* background-image does not support transition
-   * so here we use background-color and border on a div
-   * to draw an image just like
-   * url("./images/scrubber_pressed.png")
-   * that image is also committed
-   * if UX wants to use the original image
-   */
-  background-color: rgba(0, 180, 225, 0.85);
-  border: solid 0.8rem rgba(0, 0, 0, 0.3);
+  line-height: 1.7rem;
 }
 
 #player-controls {
@@ -802,7 +749,7 @@ button::-moz-focus-inner {
 }
 
 #player-controls-previous, 
-#player-controls-play, 
+#player-controls-play,
 #player-controls-next {
   position: relative;
   float: left;

@@ -396,8 +396,11 @@ var Settings = {
     var type = input.dataset.type || input.type; // bug344618
     var key = input.name;
 
+    var isChangeable = (type == 'range' && event.type == 'touchend') ||
+      (type != 'range' && event.type == 'change');
     var settings = window.navigator.mozSettings;
-    if (!key || !settings || event.type != 'change')
+
+    if (!key || !settings || !isChangeable)
       return;
 
     // Not touching <input> with data-setting attribute here
@@ -595,22 +598,37 @@ window.addEventListener('load', function loadSettings() {
     // panel-specific initialization tasks
     switch (panel.id) {
       case 'display':             // <input type="range"> + brightness control
-        bug344618_polyfill();     // XXX to be removed when bug344618 is fixed
         var manualBrightness = panel.querySelector('#brightness-manual');
         var autoBrightnessSetting = 'screen.automatic-brightness';
         var settings = Settings.mozSettings;
+
+        bug344618_polyfill();     // XXX to be removed when bug344618 is fixed
         if (!settings)
           return;
-        settings.addObserver(autoBrightnessSetting, function(event) {
-          manualBrightness.hidden = event.settingValue;
-        });
-        var req = settings.createLock().get(autoBrightnessSetting);
-        req.onsuccess = function brightness_onsuccess() {
-          manualBrightness.hidden = req.result[autoBrightnessSetting];
-        };
+
+        setTimeout(function(){
+          settings.addObserver(autoBrightnessSetting, function(event) {
+            manualBrightness.style.position = 'relative';
+            manualBrightness.style.visibility = 'visible';
+            manualBrightness.hidden = event.settingValue;
+          });
+          var req = settings.createLock().get(autoBrightnessSetting);
+          req.onsuccess = function brightness_onsuccess() {
+            manualBrightness.style.position = 'relative';
+            manualBrightness.style.visibility = 'visible';
+            manualBrightness.hidden = req.result[autoBrightnessSetting];
+          };
+          var range = manualBrightness.querySelector('input');
+          range.addEventListener('touchend', Settings.handleEvent, false);
+        }, 0);
         break;
       case 'sound':               // <input type="range">
         bug344618_polyfill();     // XXX to be removed when bug344618 is fixed
+        var soundRanges = panel.querySelectorAll('input[type="range"]');
+        for (var i = 0; i < soundRanges.length; i++) {
+          var range = soundRanges[i];
+          range.addEventListener('touchend', Settings.handleEvent, false);
+        }
         break;
       case 'languages':           // fill language selector
         var langSel = document.querySelector('select[name="language.current"]');

@@ -245,10 +245,9 @@ header .icon:after {
 #videoBar {
   background-image: url(images/scroll_bar_bg.png);
   background-color: rgba(0, 0, 0, 0.75);
-  background-position: center right;
+  background-position: 8.4rem center;
   background-repeat: no-repeat;
   position: absolute;
-  overflow: hidden;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -296,89 +295,36 @@ header .icon:after {
 
 /* time slider */
 #timeSlider {
-  position: absolute;
-  left: 8.5rem;
-  top: 0px;
-  right: 0px;
-  height: 100%;
+  width: calc(100% - 6.1rem);
+  margin-left: 6.1rem;
+  top: 1rem;
+}
+
+#timeSlider div {
+  width: calc(100% - 2 * 5.9rem - 3rem);
 }
 
 #timeSlider span {
-  display: block;
   width: 5.9rem;
-  position: absolute;
-  color: #A1AFB2;
-  height: 100%;
-  line-height: 4.6rem;
-  text-align: center;
   font-size: 1.4rem;
 }
 
+#timeSlider.active span {
+  color: #00caf2;
+}
+
 #duration-text {
-  right: 0rem;
-}
-
-#slider-wrapper {
-  position: absolute;
-  top: 0px;
-  left: 7rem;
-  right: 7rem;
-  height: 100%;
-}
-
-#slider-wrapper div {
-  position: absolute;
-  pointer-events: none;
-}
-
-.progress {
-  height: 4px;
-  width: 0%;
-  top: 50%;
-  margin-top: -2px;
-}
-
-#elapsedTime {
-  background: url(images/timeline_filled.png) no-repeat left center;
-  z-index: 30;
-}
-
-#bufferedTime {
-  background-color: blue;
-  z-index: 20;
-}
-
-#timeBackground {
-  background: url(images/timeline.png);
-  z-index: 10;
-  width: 100%;
-}
-
-#playHead {
-  -moz-transition: background 1s linear;
-  background: url(images/scrubber.png);
-  margin: -1.1rem 0 0 -1.2rem;
-  position: absolute;
-  pointer-events: none;
-  border: none;
-  display: block;
-  height: 2.4rem;
-  width: 2.7rem;
-  z-index: 100;
-  top: 49%;
-}
-
-#playHead.active {
-  background: url(images/scrubber_pressed.png);
-  width: 8.1rem;
-  height: 4.5rem;
-  margin: -1rem 0 0 -3.93rem;
-  top: 1rem;
+  right: 0.5rem;
 }
 
 @media (width: 480px) {
   li .details {
     width: 24rem;
+  }
+
+  #timeSlider {
+    width: calc(100% - 8.6rem);
+    margin-left: 8.6rem;
   }
 }
 
@@ -397,10 +343,6 @@ header .icon:after {
 
   #play:after {
     background-position: 1.1rem 0.8rem;
-  }
-
-  #timeSlider {
-    left: 6.1rem;
   }
 
   #videoBar {
