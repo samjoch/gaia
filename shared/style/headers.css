@@ -6,8 +6,8 @@ section[role="region"] > header:first-child {
   z-index: 10;
   padding: 0;
   height: 5rem;
-  color: #fff;
-  background: url(headers/images/ui/header.png) repeat-x 0 0;
+  color: menuText;
+  background-color: menu;
   background-size: auto 100%;
   border: none;
 }

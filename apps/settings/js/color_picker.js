@@ -1,5 +1,3 @@
-//XXX: Waiting for the window.showModalDialog support in B2G
-
 'use strict';
 
 var ColorPicker = (function() {
@@ -14,9 +12,9 @@ var ColorPicker = (function() {
   var ctx = null;
   var canvasBoundingClientRect = null;
   var callback = null;
-  
-  var init  = function(){
-    
+
+  var init = function() {
+
     colorPalette = new Image();
     canvas = document.createElement('canvas');
     ctx = canvas.getContext('2d');
@@ -24,7 +22,7 @@ var ColorPicker = (function() {
     colorPalette.onload = prepareCanvas;
     colorPalette.src = 'style/images/colors.jpg';
     colorPalette.id = 'palette';
-    
+
     screen = document.getElementById('color-picker-tab');
     //screen.setAttribute('role', 'region');
     //screen.id = 'dialog-screen';
@@ -33,12 +31,11 @@ var ColorPicker = (function() {
     dialog.id = 'dialog-dialog';
     dialog.setAttribute('role', 'dialog');
     screen.appendChild(dialog);
-    //screen.hidden = true;
 
     // var bc_checkboxLabel = document.createElement('label');
     // basicColorCheckbox = document.createElement('input');
     // var bc_checkboxSpan = document.createElement('span');
-    // 
+    //
     // basicColorCheckbox.type = "checkbox";
     // basicColorCheckbox.dataset.type = "switch";
     // bc_checkboxLabel.appendChild(basicColorCheckbox);
@@ -67,18 +64,20 @@ var ColorPicker = (function() {
     menu.appendChild(yes);
     dialog.appendChild(menu);
   }
-  
-  var prepareCanvas = function(){
+
+  var prepareCanvas = function() {
     canvas.width = colorPalette.width;
     canvas.height = colorPalette.height;
-    ctx.drawImage(colorPalette, 0, 0);    
+    ctx.drawImage(colorPalette, 0, 0);
   }
-  
+
   var getColorOnPosition = function(x, y) {
-    var imgData = ctx.getImageData(x,y,1,1).data;
-    return ((1 << 24) + (imgData[0] << 16) + (imgData[1] << 8) + imgData[2]).toString(16).substr(1);
+    var imgData = ctx.getImageData(x, y, 1, 1).data;
+    // convert rgb to hex
+    return ((1 << 24) + (imgData[0] << 16) + (imgData[1] << 8) + imgData[2])
+      .toString(16).substr(1);
   }
-  
+
   var onClickEvent = function(evt) {
     var x, y;
     switch (evt.type) {
@@ -90,26 +89,25 @@ var ColorPicker = (function() {
         x = evt.detail.screenX - canvasBoundingClientRect.left;
         y = evt.detail.screenY - canvasBoundingClientRect.top;
     }
-    
-    renderColor("#" + getColorOnPosition(x, y));
-      
+
+    renderColor('#' + getColorOnPosition(x, y));
+
   }
-  
+
   var renderColor = function(color) {
     pickedColor.style.backgroundColor = pickedColor.innerHTML = color;
   }
-  
+
   var hide = function() {
     if (typeof callback === 'function') {
       callback(pickedColor.innerHTML);
     }
-    
+
     window.location.hash = '#themes';
-    //screen.hidden = true;
   }
-  
+
   init();
-  
+
   return {
     hide: hide,
 
@@ -117,8 +115,6 @@ var ColorPicker = (function() {
         callback = cb;
         renderColor(color);
         window.location.hash = '#color-picker-tab';
-
-        //screen.hidden = false;
     }
   };
 }());
