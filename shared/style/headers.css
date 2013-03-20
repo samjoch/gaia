@@ -53,8 +53,7 @@ section[role="region"] > header:first-child input[type="text"] {
   height: 3rem;
   -moz-box-sizing: border-box;
   padding: 0 0.8rem;
-  border: solid 0.1rem #9d4123;
-  border-top-color: #a6501e;
+  border: solid 0.1rem menu;
   border-radius: 0.3rem;
   background: #fff url(headers/images/ui/shadow.png) repeat-x left -0.1rem;
   font: 1.5rem/3em "MozTT", Sans-serif;
@@ -106,7 +105,7 @@ section[role="region"] > header:first-child menu[type="toolbar"] button {
 
 section[role="region"] > header:first-child menu[type="toolbar"] a:last-child,
 section[role="region"] > header:first-child menu[type="toolbar"] button:last-child {
-  background: url(headers/images/ui/separator.png) no-repeat left center / auto 3.4rem;
+  background: url(headers/images/ui/alpha-separator.png) no-repeat left center / auto 3.4rem;
   margin-left: -0.2rem;
   z-index: 1;
 }
@@ -289,7 +288,7 @@ section[role="region"] header h2 {
 section[role="region"].skin-dark > header:first-child,
 .skin-dark section[role="region"] > header:first-child {
   /*background-image: url(headers/images/ui/dark/header.png);*/
-  background-color: #333b3e;
+  background-color: appWorkspace;
 }
 
 /* Navigation links (back, cancel, etc) */
@@ -298,7 +297,7 @@ section[role="region"].skin-dark > header:first-child > a .icon:after,
 section[role="region"].skin-dark > header:first-child > button .icon:after,
 .skin-dark section[role="region"] > header:first-child > button .icon:after {
   /*background-image:  url(headers/images/ui/dark/negative.png);*/
-  background-color: #26272c;
+  background-color: appWorkspace;
 }
 
 section[role="region"].skin-dark > header:first-child menu[type="toolbar"] a:last-child,
@@ -321,7 +320,7 @@ section[role="region"].skin-dark header h2,
 
 section[role="region"].skin-organic > header:first-child,
 .skin-organic section[role="region"] > header:first-child {
-  background-color: #333b3e;
+  background-color: appWorkspace;
   background-image: url("headers/images/ui/alpha-noise.png"), url("headers/images/ui/alpha-header.png");
 }
 

@@ -142,8 +142,8 @@ settings = {
  "icc.displayTextTimeout": 40000,
  "icc.inputTextTimeout": 40000,
  "gaia.ui.menu": "#ff8004",
- "gaia.ui.menutext": "#101010",
- "gaia.ui.appworkspace": "#262626",
+ "gaia.ui.menutext": "#fff",
+ "gaia.ui.appworkspace": "#262626", # #333b3e
  "gaia.ui.infobackground": "#f5f5b5",
  "gaia.ui.buttonface": "#ece7e2",
  "gaia.ui.window": "#efebe7",
