@@ -7,7 +7,7 @@ section[role="region"] > header:first-child {
   padding: 0;
   height: 5rem;
   color: menuText;
-  background: url(headers/images/ui/alpha-header.png) repeat-x 0 0 menu;
+  background: menu url(headers/images/ui/alpha-header.png) repeat-x 0 0;
   background-size: auto 100%;
   border: none;
 }
@@ -27,7 +27,7 @@ section[role="region"] > header:first-child:after {
 section[role="region"] > header:first-child h1 {
   font: 2.5rem/4.8rem "MozTT", Sans-serif;
   text-align: left;
-  color: #fff;
+  color: menuText;
   white-space: nowrap;
   text-overflow: ellipsis;
   display: block;
@@ -250,7 +250,7 @@ section[role="region"] > header:first-child > a .icon:after {
   z-index: -1;
   width: 2rem;
   height: 4.9rem;
-  background: #9d3d26 url(headers/images/ui/alpha-negative.png) repeat-x left bottom / auto 100%;
+  background: menu url(headers/images/ui/alpha-negative.png) repeat-x left bottom / auto 100%;
 }
 
 section[role="region"] > header > a .icon.icon-menu,
