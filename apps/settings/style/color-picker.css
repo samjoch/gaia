@@ -1,0 +1,18 @@
+#palette {
+  margin:auto;
+}
+
+#picked-color {
+  margin: auto;
+  width: 300px;
+  height: 50px;
+  border: 1px solid #000;
+  font-size: 40px;
+  color: #FFFFFF;
+  text-shadow: 2px 2px #000000;
+}
+
+#color-picker-tab {
+  background: url(styles/images/pattern.png) repeat left top, url(styles/images/gradient.png) no-repeat left top;
+	background-size: auto auto, 100% 100%;
+}

@@ -6,8 +6,8 @@ section[role="region"] > header:first-child {
   z-index: 10;
   padding: 0;
   height: 5rem;
-  color: #fff;
-  background: url(headers/images/ui/alpha-header.png) repeat-x 0 0 #cd6723;
+  color: menuText;
+  background: url(headers/images/ui/alpha-header.png) repeat-x 0 0 menu;
   background-size: auto 100%;
   border: none;
 }
