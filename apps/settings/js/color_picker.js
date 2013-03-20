@@ -103,7 +103,7 @@ var ColorPicker = (function() {
       callback(pickedColor.innerHTML);
     }
 
-    window.location.hash = '#themes';
+    window.location.hash = '#color-themes';
   }
 
   init();

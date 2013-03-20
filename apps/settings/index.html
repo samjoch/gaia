@@ -1041,26 +1041,41 @@
     <section role="region" id="color-picker-tab">
     </section>
     
-    <!-- Personalization :: Themes -->
-    <section role="region" id="themes">
-      <!--
-      <header>
-        <a href="#root"><span class="icon icon-back">back</span></a>
+    <!-- Personalization :: Themes :: Homescreen Tab-->
+    <section role="region" id="homescreen-tab">
+    <!-- <header>
+        <a href="#themes"><span class="icon icon-back">back</span></a>
         <h1 data-l10n-id="themes"> Themes </h1>
       </header>
-
-      <ul>
-        <li>
-          <label>
-            <input type="checkbox" checked />
-            <span></span>
-          </label>
-          <a>Use custom theme</a>
-        </li>
-      </ul>
-      
        <header>
-          <h2 data-l10n-id="tones">Colors</h2>
+          <h2 data-l10n-id="homescreen">Homescreen</h2>
+        </header> 
+        <ul>
+          <li>
+            <p>Gaia Homescreen</p>
+            <p class="fake-select">
+              <button id="gaia-homescreen"> Activate </button>
+            </p>
+          </li>
+          <li>
+            <p>Balmer Homescreen</p>
+            <p class="fake-select">
+              <button id="balmer-homescreen"> Activate </button>
+            </p>
+          </li>
+          <script src="js/themes-homescreen.js"></script>
+        -->
+    </section>
+    
+    <!-- Personalization :: Color Themes -->
+    <section role="region" id="color-themes">
+      <!--
+      <header>
+        <a href="#themes"><span class="icon icon-back">back</span></a>
+        <h1 data-l10n-id="themes"> Themes </h1>
+      </header>
+       <header>
+          <h2 data-l10n-id="colors">Colors</h2>
         </header>
         <ul>
           <li>
@@ -1108,18 +1123,49 @@
         </ul>
       
       <script src="shared/js/gesture_detector.js"></script>
-      
-      <link rel="stylesheet" type="text/css" href="shared/style/buttons.css">
-      <link rel="stylesheet" type="text/css" href="shared/style/switches.css">
-      <link rel="stylesheet" type="text/css" href="style/core.css">
+      <script src="js/themes.js"></script> 
       
       <script src="js/color_picker.js"></script>
-      <script src="js/themes.js"></script>
       <link rel="stylesheet" type="text/css" href="style/color-picker.css">
       <link rel="stylesheet" type="text/css" href="style/themes.css"/>
       -->
     </section>
       
+    <!-- Personalization :: Themes -->
+    <section role="region" id="themes">
+    <!-- 
+    <header>
+      <a href="#root"><span class="icon icon-back">back</span></a>
+      <h1 data-l10n-id="themes"> Themes </h1>
+    </header>
+    <header>
+      <h2 data-l10n-id="colors">Colors</h2>
+    </header>
+    <ul>
+      <li>
+        <label>
+          <button data-href="#color-themes"
+            data-l10n-id="change-colors">Change Colors</button>
+        </label>
+      </li>
+    </ul>
+    <header>
+      <h2 data-l10n-id="homescreen">Homescreen</h2>
+    </header>
+    <ul>
+      <li>
+        <label>
+          <button data-href="#homescreen-tab"
+            data-l10n-id="change-homescreen">Change Homescreen</button>
+        </label>
+      </li>
+    </ul>
+    <link rel="stylesheet" type="text/css" href="shared/style/buttons.css">
+    <link rel="stylesheet" type="text/css" href="shared/style/switches.css">
+    <link rel="stylesheet" type="text/css" href="style/core.css">
+    -->
+    </section>
+    
     <!-- Personalization :: Sound :: Sound Selection -->
     <section role="region" id="sound-selection">
       <!--
