@@ -15,7 +15,7 @@ var ThemesHomescreen = (function(){
   
   gaiaButton.addEventListener('click', function(){
     navigator.mozSettings.createLock().set({'homescreen.manifestURL': 'app://homescreen.gaiamobile.org/manifest.webapp'});
-    alert('New homescreen will be shown after rebooting');
+    alert('New homescreen will be enabled soon');
     // navigator.mozPower.reboot();
     // ScreenManager.turnScreenOff(true);
     //WindowManager.kill('app://customhs.gaiamobile.org/manifest.webapp');
@@ -23,7 +23,7 @@ var ThemesHomescreen = (function(){
   
   balmerButton.addEventListener('click', function(){
     navigator.mozSettings.createLock().set({'homescreen.manifestURL': 'app://customhs.gaiamobile.org/manifest.webapp'});
-    alert('New homescreen will be shown after rebooting');
+    alert('New homescreen will be enabled soon');
     //WindowManager.kill('app://homescreen.gaiamobile.org/manifest.webapp');
         // navigator.mozPower.reboot();
         // ScreenManager.turnScreenOff(true);
