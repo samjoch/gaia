@@ -7,7 +7,7 @@ section[role="region"] > header:first-child {
   padding: 0;
   height: 5rem;
   color: #fff;
-  background: url(headers/images/ui/header.png) repeat-x 0 0;
+  background: url(headers/images/ui/alpha-header.png) repeat-x 0 0 #cd6723;
   background-size: auto 100%;
   border: none;
 }
@@ -250,7 +250,7 @@ section[role="region"] > header:first-child > a .icon:after {
   z-index: -1;
   width: 2rem;
   height: 4.9rem;
-  background: #9d3d26 url(headers/images/ui/negative.png) repeat-x left bottom / auto 100%;
+  background: #9d3d26 url(headers/images/ui/alpha-negative.png) repeat-x left bottom / auto 100%;
 }
 
 section[role="region"] > header > a .icon.icon-menu,
@@ -288,7 +288,8 @@ section[role="region"] header h2 {
  * ---------------------------------- */
 section[role="region"].skin-dark > header:first-child,
 .skin-dark section[role="region"] > header:first-child {
-  background-image: url(headers/images/ui/dark/header.png);
+  /*background-image: url(headers/images/ui/dark/header.png);*/
+  background-color: #333b3e;
 }
 
 /* Navigation links (back, cancel, etc) */
@@ -296,7 +297,7 @@ section[role="region"].skin-dark > header:first-child > a .icon:after,
 .skin-dark section[role="region"] > header:first-child > a .icon:after,
 section[role="region"].skin-dark > header:first-child > button .icon:after,
 .skin-dark section[role="region"] > header:first-child > button .icon:after {
-  background-image:  url(headers/images/ui/dark/negative.png);
+  /*background-image:  url(headers/images/ui/dark/negative.png);*/
   background-color: #26272c;
 }
 
@@ -320,7 +321,8 @@ section[role="region"].skin-dark header h2,
 
 section[role="region"].skin-organic > header:first-child,
 .skin-organic section[role="region"] > header:first-child {
-  background-image: url(headers/images/ui/organic/header.png),  url(headers/images/ui/organic/pattern.png);
+  background-color: #333b3e;
+  background-image: url("headers/images/ui/alpha-noise.png"), url("headers/images/ui/alpha-header.png");
 }
 
 section[role="region"].skin-organic > header:first-child:after,
