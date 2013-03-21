@@ -792,12 +792,3 @@ window.addEventListener('localized', function showLanguages() {
 Settings.preInit();
 
 MouseEventShim.trackMouseMoves = false;
-
-var updateCss = function updateCss() {
-  // Reload headers.css
-  var style = document.querySelector('link[href*="headers.css"]');
-  style.href = '/shared/style/headers.css?reload=' + new Date().getTime();
-}
-window.navigator.mozSettings.addObserver('gaia.ui.menu', updateCss);
-window.navigator.mozSettings.addObserver('gaia.ui.menutext', updateCss);
-window.navigator.mozSettings.addObserver('gaia.ui.appworkspace', updateCss);

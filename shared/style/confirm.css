@@ -4,9 +4,7 @@
 
 /* Main dialog setup */
 form[role="dialog"][data-type="confirm"] {
-  background:
-    url(confirm/images/ui/pattern.png) repeat left top,
-    url(confirm/images/ui/gradient.png) no-repeat left top / 100% 100%;
+  background: window url(confirm/images/ui/pattern.png) repeat left top;
   overflow: hidden;
   position: absolute;
   z-index: 100;
@@ -35,7 +33,7 @@ form[role="dialog"][data-type="confirm"]:before {
 form[role="dialog"][data-type="confirm"] > section {
   font-weight: lighter;
   font-size: 2.2rem;
-  color: #FAFAFA;
+  color: windowtext;
   padding: 0 2.5rem 0 2rem;
   -moz-box-sizing: padding-box;
   width: 100%;
@@ -50,7 +48,7 @@ form[role="dialog"][data-type="confirm"] h1 {
   font-weight: normal;
   font-size: 1.6rem;
   line-height: 1em;
-  color: #fff;
+  color: windowtext;
   margin: 0;
   padding: 0;
 }
@@ -61,7 +59,7 @@ form[role="dialog"][data-type="confirm"] menu {
   margin: 0;
   padding: 1.5rem;
   border-top: solid 0.1rem rgba(255, 255, 255, 0.1);
-  background: #2d2d2d url(confirm/images/ui/pattern.png) repeat left top;
+  background: window url(confirm/images/ui/pattern.png) repeat left top;
   display: block;
   overflow: hidden;
   position: absolute;
@@ -159,7 +157,7 @@ form[role="dialog"][data-type="confirm"] p {
   word-wrap: break-word;
   margin: 1rem 0 0;
   padding-top: 1rem;
-  border-top: 0.1rem solid #686868;
+  border-top: 0.1rem solid windowtext;
 }
 
 form[role="dialog"][data-type="confirm"] p img {

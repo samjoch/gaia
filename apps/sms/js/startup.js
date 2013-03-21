@@ -29,17 +29,6 @@ var lazyLoadFiles = [
   'shared/style/responsive.css'
 ];
 
-var updateCss = function updateCss() {
-  // Reload headers.css
-  var style = document.querySelector('link[href*="headers.css"]');
-  style.href = '/shared/style/headers.css?reload=' + new Date().getTime();
-  style = document.querySelector('link[href*="lists.css"]');
-  style.href = '/shared/style_unstable/lists.css?reload=' + new Date().getTime();
-}
-window.navigator.mozSettings.addObserver('gaia.ui.menu', updateCss);
-window.navigator.mozSettings.addObserver('gaia.ui.menutext', updateCss);
-window.navigator.mozSettings.addObserver('gaia.ui.appworkspace', updateCss);
-
 window.addEventListener('localized', function showBody() {
   // Set the 'lang' and 'dir' attributes to <html> when the page is translated
   document.documentElement.lang = navigator.mozL10n.language.code;

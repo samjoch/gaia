@@ -21,14 +21,14 @@
   height: 3rem;
 
   content: '';
-  background-image: url(images/icons_sprite.gif);
+  background-image: url(images/icons_sprite.png);
   background-size: 15rem;
 }
 
-.menu-item:active::before {
+/*.menu-item:active::before {
   background-image: url(images/icons_sprite_active.gif);
 }
-
+*/
 #menuItem-airplaneMode::before {
   background-position: 0 0;
 }
@@ -135,6 +135,10 @@
 
 #menuItem-icc::before {
   background-position: -12rem -12rem;
+}
+
+#menuItem-themes::before {
+  background-position: -6rem -15rem;
 }
 
 
