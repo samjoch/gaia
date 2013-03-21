@@ -855,6 +855,7 @@ var WindowManager = (function() {
   // which should be handled in setDisplayedApp and in closeWindow()
   function ensureHomescreen(reset) {
     // If the url of the homescreen is not known at this point do nothing.
+    retrieveHomescreen(function(){});
     if (!homescreen || !homescreenManifestURL) {
       return null;
     }
@@ -884,6 +885,7 @@ var WindowManager = (function() {
       var app =
         Applications.getByManifestURL(this.result['homescreen.manifestURL']);
 
+        console.log('--------- retrivingg!', this.result['homescreen.manifestURL']);
       // XXX This is a one-day workaround to not break everybody and make sure
       // work can continue.
       if (!app) {
