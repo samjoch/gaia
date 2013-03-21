@@ -195,9 +195,9 @@ var CardsView = (function() {
         setTimeout(displayedAppCallback);
       }
       // Not showing homescreen
-      // if (app.frame.classList.contains('homescreen')) {
-      //         return;
-      //       }
+      if (app.frame.classList.contains('homescreen')) {
+              return;
+            }
 
       // Build a card representation of each window.
       // And add it to the card switcher
