@@ -126,12 +126,9 @@ const Homescreen = (function() {
       ctx.putImageData(imageData, 0, 0);
       callback(canvas.toDataURL());
     }
-    console.log('--', icon);
     if (icon.indexOf('app') !== -1) {
-      console.log('----weszlo 1');
       img.src = '/style/icons/' + icon.split('/').pop();
     } else {
-      console.log('----weszlo 2');
       img.src = icon;
     }
   }

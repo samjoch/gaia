@@ -44,17 +44,17 @@ html, body {
 }
 
 #landing-page.show .app-tile {
- transform: translate3d(0,0,0) rotateY(-60deg) rotateZ(-60deg);   
+ transform: translate3d(0,0,0) rotateY(-90deg) rotateZ(0deg) rotateX(0deg);   
  opacity: 0;
  transition: 800ms 0ms;
 }
 
 #landing-page.show .app-tile.tr1 {
-  transform: translate3d(0,0,0) rotateY(60deg) rotateZ(60deg);  
+  transform: translate3d(0,0,0) rotateY(0deg) rotateZ(90deg) rotateX(0deg);  
 }
 
 #landing-page.show .app-tile.tr2 {
-  transform: translate3d(0,0,0) rotateY(45deg) rotateZ(-40deg);  
+  transform: translate3d(0,0,0) rotateZ(0deg) rotateY(0deg) rotateX(90deg);  
 }
 
 #landing-page .app-tile.animate {
