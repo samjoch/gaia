@@ -21,13 +21,13 @@
 
 /* Title divisors */
 [data-type="list"] header {
-  border-bottom: 0.1rem solid #ff4E00;
+  border-bottom: 0.1rem solid menu;
   padding: 0.5rem 1rem;
   margin: 0;
   font-size: 1.6rem;
   line-height: 1.8rem;
   font-weight: normal;
-  color: #ff4E00;
+  color: menu;
   text-transform: uppercase;
 }
 
