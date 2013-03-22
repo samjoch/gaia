@@ -11,9 +11,9 @@
   background-color: #f4f4f4;
   transform: translateY(-100%);
   text-align: left;
-  color: #FF5F19;
+  color: menu;
   font-size: 1.6rem;
-  border-bottom: 1px solid #FF5F19;
+  border-bottom: 1px solid menu;
   pointer-events: none;
 }
 
