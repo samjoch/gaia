@@ -1,5 +1,6 @@
 var updateCss = function updateCss() {
-  var files = ['shared/style/headers.css',
+  var files = ['style/app.css',
+               'shared/style/headers.css',
                'shared/style/confirm.css',
                'shared/style_unstable/lists.css'];
   for (var i=0; i < files.length; i++) {
