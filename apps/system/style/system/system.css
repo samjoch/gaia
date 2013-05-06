@@ -239,6 +239,12 @@ body {
  *
   border-radius: 0.8rem;
  */
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#windows > .appWindow.active:not(.homescreen) {
+  background-color: #fff;
 }
 
 #windows > .appWindow > iframe {
@@ -252,14 +258,6 @@ body {
 
 #screen.active-statusbar #windows > .appWindow {
   top: 4rem;
-}
-
-#windows > .appWindow:not(.homescreen) {
-  background-color: #fff;
-}
-
-#windows > .appWindow:not(.homescreen).default-background {
-  background: url('/shared/resources/branding/splash_screen_generic.png') center center no-repeat #fff;
 }
 
 #windows > .appWindow:not(.active):not(.homescreen):not(.opening):not(.closing) {
@@ -276,7 +274,8 @@ body {
 }
 
 #windows > .appWindow.opening {
-  animation: openApp 0.3s forwards ease;
+  animation: openApp .3s forwards ease;
+  background-color: black;
   pointer-events: auto;
 }
 
@@ -439,84 +438,9 @@ body {
   top: 0;
 }
 
-#screen.attention > #windows > .appWindow.fullscreen-app,
-#screen.attention > #windowSprite,
-#screen.fullscreen-app.attention > #windowSprite {
+#screen.attention > #windows > .appWindow.fullscreen-app {
   height: calc(100% - 4rem);
   top: 4rem;
-}
-
-#windowSprite.before-inline-activity {
-  transform: translateY(calc(100% - 0.1rem));
-  opacity: 1;
-  visibility: visible;
-}
-
-#windowSprite.inline-activity-opening {
-  transition: transform 0.25s ease;
-  transform: translateY(0);
-  opacity: 1;
-  visibility: visible;
-}
-
-#windowSprite.inline-activity-opened {
-  transition: opacity 0.15s ease;
-
-  transform: translateY(0);
-  opacity: 0;
-  visibility: visible;
-}
-
-#windowSprite.before-open {
-  transform: scale(0.6);
-  /* 0.01 opacity is needed to make sure Gecko paints and fire
-     MozAfterPaint event for us. */
-  opacity: 0.01;
-  visibility: visible;
-}
-
-#windowSprite.opening {
-  transition: transform 0.25s ease, opacity 0.15s ease;
-
-  transform: scale(1);
-  opacity: 1;
-  visibility: visible;
-}
-
-#screen.trustedui #windowSprite.opening {
-  opacity: 0;
-}
-
-#windowSprite.opened {
-  transition: opacity 0.15s ease;
-
-  transform: scale(1);
-  opacity: 0;
-  visibility: visible;
-}
-
-#windowSprite.before-close {
-  transform: scale(1);
-  /* 0.01 opacity is needed to make sure Gecko paints and fire
-     MozAfterPaint event for us. */
-  opacity: 0.01;
-  visibility: visible;
-}
-
-#windowSprite.closing {
-  transition: opacity 0.05s ease;
-
-  transform: scale(1);
-  opacity: 1;
-  visibility: visible;
-}
-
-#windowSprite.closed {
-  transition: transform 0.25s ease, opacity 0.15s ease;
-
-  transform: scale(0.6);
-  opacity: 0;
-  visibility: visible;
 }
 
 .accessibility-invert {
