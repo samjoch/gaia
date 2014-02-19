@@ -311,7 +311,7 @@ contacts.Search = (function() {
           currentSet[contact.dataset.uuid] = clonedNode;
           searchList.appendChild(clonedNode);
         }
-
+        SearchHighlight.on(currentSet[contact.dataset.uuid], searchText);
         state.searchables.push({
           node: contact,
           text: contactText

@@ -44,6 +44,10 @@ form.search button[type="submit"] {
   opacity: 0;
 }
 
+.search-highlight {
+  background-color: #008aaa;
+}
+
 #view-screenshot.search {
   z-index: 1;
 }
