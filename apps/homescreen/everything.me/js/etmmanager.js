@@ -179,7 +179,7 @@ var EvmeManager = (function EvmeManager() {
 
     var icon = GridManager.getIcon(descriptor);
     if (icon && icon.descriptor) {
-      icon = icon.descriptor.renderedIcon;
+      icon = icon.descriptor.originalRenderedIcon;
     }
 
     appInfo = {
